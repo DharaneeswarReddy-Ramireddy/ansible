@@ -1,0 +1,30 @@
+---
+- name: Configure NginX and CloudWatch Agent
+  hosts: web
+  become: yes
+  tasks:
+    - name: Install NginX
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Install CloudWatch Agent
+      apt:
+        name: amazon-cloudwatch-agent
+        state: present
+        update_cache: yes
+
+    - name: Enable and Start CloudWatch Agent
+      systemd:
+        name: amazon-cloudwatch-agent
+        enabled: yes
+        state: started
+
+    - name: Copy CloudWatch configuration file
+      copy:
+        src: /path/to/your/config.json
+        dest: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+
+    - name: Fetch CloudWatch Agent configuration
+      command: /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json -s
