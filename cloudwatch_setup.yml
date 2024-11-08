@@ -9,17 +9,27 @@
         state: present
         update_cache: yes
 
+    - name: Download CloudWatch Agent package
+      get_url:
+        url: https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
+        dest: /tmp/amazon-cloudwatch-agent.deb
+
     - name: Install CloudWatch Agent
       apt:
-        name: amazon-cloudwatch-agent
+        deb: /tmp/amazon-cloudwatch-agent.deb
         state: present
-        update_cache: yes
 
     - name: Enable and Start CloudWatch Agent
       systemd:
         name: amazon-cloudwatch-agent
         enabled: yes
         state: started
+
+    - name: Ensure CloudWatch Agent config directory exists
+      file:
+        path: /opt/aws/amazon-cloudwatch-agent/etc
+        state: directory
+        mode: '0755'
 
     - name: Copy CloudWatch configuration file
       copy:
