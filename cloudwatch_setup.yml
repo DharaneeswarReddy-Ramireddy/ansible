@@ -23,7 +23,7 @@
 
     - name: Copy CloudWatch configuration file
       copy:
-        src: inventory-cloudwatch.json
+        src: ./amazon-cloudwatch-agent.json
         dest: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
 
     - name: Fetch CloudWatch Agent configuration
