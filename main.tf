@@ -34,11 +34,11 @@ resource "aws_security_group" "ssh_access" {
   }
 }
 
-# Local file to generate Ansible inventory
+# Local file to generate Ansible inventory using the public IP
 resource "local_file" "ansible_inventory" {
   content = <<EOF
 [web]
-${aws_instance.my_ec2.private_ip}
+${aws_instance.my_ec2.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/your_key_pair.pem
 EOF
   filename = "${path.module}/inventory.ini"
 }
