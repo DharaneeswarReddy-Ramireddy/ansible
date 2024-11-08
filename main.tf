@@ -40,9 +40,9 @@ resource "local_file" "ansible_inventory" {
 [web]
 ${aws_instance.my_ec2.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=./dharan-ansible.pem
 EOF
-  filename = "${path.module}/inventory.ini"
+  filename = "inventory.ini"
 }
 
 output "instance_ip" {
-  value = aws_instance.my_ec2.private_ip
+  value = aws_instance.my_ec2.public_ip
 }
