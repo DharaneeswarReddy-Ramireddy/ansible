@@ -38,7 +38,7 @@ resource "aws_security_group" "ssh_access" {
 resource "local_file" "ansible_inventory" {
   content = <<EOF
 [web]
-${aws_instance.my_ec2.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/your_key_pair.pem
+${aws_instance.my_ec2.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/dharan-a9.pem
 EOF
   filename = "${path.module}/inventory.ini"
 }
