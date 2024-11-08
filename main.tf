@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_instance" "my_ec2" {
   ami           = "ami-04dd23e62ed049936" 
   instance_type = "t2.micro"
-  key_name      = "dharan-a9" 
+  key_name      = "dharan-ansible" 
 
   # Enable SSH access
   vpc_security_group_ids = [aws_security_group.ssh_access.id]
@@ -38,7 +38,7 @@ resource "aws_security_group" "ssh_access" {
 resource "local_file" "ansible_inventory" {
   content = <<EOF
 [web]
-${aws_instance.my_ec2.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/dharan-a9.pem
+${aws_instance.my_ec2.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/dharan-ansible.pem
 EOF
   filename = "${path.module}/inventory.ini"
 }
